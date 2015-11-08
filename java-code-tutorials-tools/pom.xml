@@ -2,11 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.fantesy84</groupId>
-	<artifactId>java-code-tutorials-parent</artifactId>
+	<artifactId>java-code-tutorials-tools</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	
-	<modules>
-		<module>java-code-tutorials-tools</module>
-	</modules>
+	<packaging>jar</packaging>
 </project>
