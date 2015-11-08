@@ -1,3 +1,4 @@
+#==========Maven ignore==========
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -6,5 +7,6 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-*.project
-.settings/org.eclipse.m2e.core.prefs
+.classpath
+.project
+.settings/
