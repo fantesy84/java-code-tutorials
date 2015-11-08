@@ -5,7 +5,7 @@
  * Creator: junjie.ge
  * copy right ©2015 葛俊杰
  */
-package net.fantesy84.common.util;
+package net.fantesy84.common.util.json.jackson;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -26,6 +26,8 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
+import net.fantesy84.common.util.ArrayUtils;
 
 /**
  * TypeName: JsonUtils
@@ -151,7 +153,7 @@ public class JsonUtils {
 	 * @param dateFormat 时间格式,默认格式为<tt>yyyy-MM-dd HH:mm:ss,SSS</tt>,默认时区为GMT+8
 	 * @param nullskip 是否跳过<code>null</code>值属性,默认为不跳过
 	 * @return JSON字符串
-	 * @see net.fantesy84.common.util.JsonUtils#toJson(Object, DateFormat, boolean, boolean, Class, String...)
+	 * @see net.fantesy84.common.util.json.jackson.JsonUtils#toJson(Object, DateFormat, boolean, boolean, Class, String...)
 	 */
 	public String toJson(Object value, DateFormat dateFormat, boolean nullskip) {
 		return toJson(value, dateFormat, nullskip, false, null, new String[]{});
@@ -162,7 +164,7 @@ public class JsonUtils {
 	 * @param value 被序列化的对象
 	 * @param dateFormat 时间格式,默认格式为<tt>yyyy-MM-dd HH:mm:ss,SSS</tt>,默认时区为GMT+8
 	 * @return JSON字符串
-	 * @see net.fantesy84.common.util.JsonUtils#toJson(Object, DateFormat, boolean)
+	 * @see net.fantesy84.common.util.json.jackson.JsonUtils#toJson(Object, DateFormat, boolean)
 	 */
 	public String toJson(Object value, DateFormat dateFormat) {
 		return toJson(value, dateFormat, false);
@@ -172,7 +174,7 @@ public class JsonUtils {
 	 * 将JAVA对象序列化为JSON字符串,重载方法3
 	 * @param value 被序列化的对象
 	 * @return JSON字符串
-	 * @see net.fantesy84.common.util.JsonUtils#toJson(Object, DateFormat)
+	 * @see net.fantesy84.common.util.json.jackson.JsonUtils#toJson(Object, DateFormat)
 	 */
 	public String toJson(Object value) {
 		return toJson(value, DEFAULT_DATEFORMAT);
@@ -210,7 +212,7 @@ public class JsonUtils {
 	 * @param json JSON字符串
 	 * @param javaType JAVA对象类型
 	 * @return 指定类型的JAVA对象
-	 * @see net.fantesy84.common.util.JsonUtils#toBean(String, Class, DateFormat)
+	 * @see net.fantesy84.common.util.json.jackson.JsonUtils#toBean(String, Class, DateFormat)
 	 */
 	public <T> T toBean(String json, Class<T> javaType) {
 		return toBean(json, javaType, DEFAULT_DATEFORMAT);

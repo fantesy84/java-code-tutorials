@@ -5,7 +5,7 @@
  * Creator: junjie.ge
  * copy right ©2015 葛俊杰
  */
-package net.fantesy84.common.util;
+package net.fantesy84.common.util.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
