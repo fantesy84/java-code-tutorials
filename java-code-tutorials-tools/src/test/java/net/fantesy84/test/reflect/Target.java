@@ -9,6 +9,11 @@ package net.fantesy84.test.reflect;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * TypeName: Target
  * <P>TODO
@@ -18,6 +23,7 @@ import java.util.Date;
  * @author junjie.ge
  *
  */
+@XmlRootElement
 public class Target extends BaseDTO{
 	private static final long serialVersionUID = 4425453200333362740L;
 	private Integer id;
@@ -25,10 +31,12 @@ public class Target extends BaseDTO{
 	private String name;
 	private Character sex;
 	private char charSex;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date birthday;
 	/**
 	 * @return the id
 	 */
+	@JsonProperty(value="MyID",index=1)
 	public Integer getId() {
 		return id;
 	}
@@ -99,4 +107,10 @@ public class Target extends BaseDTO{
 		this.birthday = birthday;
 	}
 	
+	public String eat(String foodName) throws Exception{
+		if (foodName == null) {
+			throw new NullPointerException();
+		}
+		return this.name + "is eating " + foodName;
+	}
 }
