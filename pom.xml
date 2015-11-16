@@ -8,5 +8,6 @@
 	
 	<modules>
 		<module>java-code-tutorials-tools</module>
+		<module>java-code-tutorials-webservice</module>
 	</modules>
 </project>
