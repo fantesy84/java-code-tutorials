@@ -21,4 +21,8 @@ public interface RegularExpressions {
 	String CONTAIN_CHINESE_REGEX = "[\u4e00-\u9fa5]";
 	String ONLY_CHINESE_REGEX = "^[\u4e00-\u9fa5]{0,}$";
 	String HTTP_OR_HTTPS_URI_REGEX = "^https?://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
+	/**
+	 * 可以匹配的KEY形式为:<code>${xxx.xxx}</code>
+	 */
+	String file_instead_keys_regex = "\\$\\{{1,1}[a-zA-Z_]+[a-zA-Z0-9_\\.]*\\}{1,1}";
 }
