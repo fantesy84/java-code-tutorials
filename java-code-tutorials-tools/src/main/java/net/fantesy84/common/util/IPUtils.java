@@ -9,9 +9,6 @@ package net.fantesy84.common.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -38,23 +35,23 @@ public class IPUtils {
 	 * <P>有多个网卡时会有多个IP,一一对应
 	 * @return 网卡地址列表
 	 */
-	public static String[] getLocalIPs(){
-		String[] adds = null;
+	public static String getLocalIPv4Address(){
+		String ip = null;
 		try {
 			InetAddress[] addresses = InetAddress.getAllByName(LOCALHOST_NAME);
 			if (CollectionUtils.notNullAndEmptyArray(addresses)) {
-				List<String> temps = new ArrayList<String>(0);
+				StringBuilder builder = new StringBuilder();
 				for (int i = 0; i < addresses.length; i++) {
-					if (addresses[i].isSiteLocalAddress()){
-						temps.add(addresses[i].getHostAddress());
+					if (addresses[i].getHostAddress().matches(RegularExpressions.IP_V4_REGEX)){
+						builder.append(",").append(addresses[i].getHostAddress());
 					}
 				}
-				adds = temps.toArray(new String[temps.size()]);
+				ip = builder.toString().replaceFirst(",", "");
 			}
 		} catch (UnknownHostException e) {
 			logger.error(e.getMessage(), new IllegalStateException(e));
 		}
-		return adds;
+		return ip;
 	}
 	
 	/**
@@ -63,7 +60,7 @@ public class IPUtils {
 	 * @param request 网络请求
 	 * @return 远程访问者IP地址
 	 */
-	public static String getRemoteIP(HttpServletRequest request){
+	public static String getRemoteIP(HttpServletRequest request, String regex){
 		String ip = null;
 		ip = request.getHeader("x-forwarded-for");
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -76,13 +73,19 @@ public class IPUtils {
 			ip = request.getRemoteAddr();
 		}
 		if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
-			try {
-				ip = InetAddress.getLocalHost().getHostAddress();
-			} catch (UnknownHostException e) {
-				logger.error(e.getMessage(), new IllegalStateException(e));
-			}
+			ip = getLocalIPv4Address();
 		}
 		if (ip != null && ip.length() > 15) {
+			if (!StringUtils.isNullOrEmpty(regex)) {
+				StringBuilder builder = new StringBuilder();
+				String[] addrs = ip.split(",");
+				for (String addr : addrs) {
+					if (addr.matches(regex)) {
+						builder.append(",").append(addr);
+					}
+				}
+				ip = builder.toString().replaceFirst(",", "");
+			}
 			if (ip.indexOf(",") > 0) {
 				ip = ip.substring(0, ip.indexOf(","));
 			}
