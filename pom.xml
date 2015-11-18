@@ -9,5 +9,6 @@
 	<modules>
 		<module>java-code-tutorials-tools</module>
 		<module>java-code-tutorials-webservice</module>
+		<module>java-code-tutorials-spring</module>
 	</modules>
 </project>
