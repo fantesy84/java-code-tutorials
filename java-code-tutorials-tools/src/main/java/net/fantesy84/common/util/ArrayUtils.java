@@ -16,7 +16,7 @@ package net.fantesy84.common.util;
  * @author junjie.ge
  *
  */
-public class ArrayUtils {
+public abstract class ArrayUtils {
 	
 	public static final Class<?>[] EMPTY_CLASS_ARRAY = new Class<?>[] {};
 	public static final Object[] EMPTY_OBJECT_ARRAY = new Object[] {};
@@ -32,15 +32,18 @@ public class ArrayUtils {
 	public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[] {};
 	public static final byte[] EMPTY_RAW_BYTE_ARRAY = new byte[] {};
 	
-	private ArrayUtils(){
-		
-	}
-	
-	public static String array2String(Object[] array){
+	public static String array2String(String[] array){
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < array.length; i++) {
-			buffer.append(",").append(array[i].toString());
+			buffer.append(",").append(array[i]);
 		}
 		return buffer.toString().replaceFirst(",", "");
+	}
+	
+	public static boolean isNullOrEmptyArray(Object[] args){
+		if (args == null || args.length == 0) {
+			return true;
+		}
+		return false;
 	}
 }

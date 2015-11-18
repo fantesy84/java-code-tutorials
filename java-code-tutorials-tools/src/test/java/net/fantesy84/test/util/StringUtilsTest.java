@@ -22,7 +22,7 @@ public class StringUtilsTest {
 	@Test
 	public void test1(){
 		String str = "甲方${userDomain.user.name}保证$aa.aa总${kk.aa是$bb.bb}在{aa.aa}三个月${9user.aa}内${_student.name}完成${project.name}的开发工作";
-		String regex = "\\$\\{{1,1}[a-zA-Z_]+[a-zA-Z0-9_\\.]*\\}{1,1}";
+		String regex = "\\$\\{{1,1}([a-zA-Z_][a-zA-Z0-9_\\.]*)\\}{1,1}";
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(str);
 		List<String> strings = new ArrayList<String>(0);
@@ -37,8 +37,8 @@ public class StringUtilsTest {
 	
 	@Test
 	public void test2(){
-		String str = "user1";
-		String regex = "^[a-zA-Z$][a-zA-Z0-9]*";
+		String str = "user1.n.ame";
+		String regex = "([a-zA-Z_$])([a-zA-Z0-9_$]*)\\.?R";
 		System.out.println(str.matches(regex));
 	}
 }

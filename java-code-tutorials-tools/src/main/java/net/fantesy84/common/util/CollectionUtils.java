@@ -7,16 +7,19 @@
  */
 package net.fantesy84.common.util;
 
+import java.util.Collection;
+
 /**
  * @author Andronicus
  * @since 2015年11月5日
  */
-public class CollectionUtils {
-	public static boolean notNullAndEmptyArray(Object[] args){
-		boolean result = false;
-		if (args != null && args.length > 0) {
-			result = true;
+public abstract class CollectionUtils {
+	
+	public static boolean isNullOrEmptyCollection(Collection<?> collection){
+		if (collection == null || collection.isEmpty()) {
+			return true;
 		}
-		return result;
+		return false;
 	}
+	
 }

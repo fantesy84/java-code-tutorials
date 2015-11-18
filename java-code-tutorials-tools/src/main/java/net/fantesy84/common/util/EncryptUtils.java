@@ -24,9 +24,9 @@ import java.util.logging.Logger;
  * @author junjie.ge
  *
  */
-public class EncryptUtils {
+public abstract class EncryptUtils {
 	private static final Logger logger = Logger.getLogger(EncryptUtils.class.getName());
-	static Charset charset = StandardCharsets.UTF_8;
+	private static Charset charset = StandardCharsets.UTF_8;
 	
 	/**
 	 * 使用MD5算法加密指定字符串

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Andronicus
  * @since 2015年11月9日
  */
-public class IPUtils {
+public abstract class IPUtils {
 	private static final Logger logger = LoggerFactory.getLogger(IPUtils.class);
 	private static String LOCALHOST_NAME;
 	
@@ -39,7 +39,7 @@ public class IPUtils {
 		String ip = null;
 		try {
 			InetAddress[] addresses = InetAddress.getAllByName(LOCALHOST_NAME);
-			if (CollectionUtils.notNullAndEmptyArray(addresses)) {
+			if (!ArrayUtils.isNullOrEmptyArray(addresses)) {
 				StringBuilder builder = new StringBuilder();
 				for (int i = 0; i < addresses.length; i++) {
 					if (addresses[i].getHostAddress().matches(RegularExpressions.IP_V4_REGEX)){
