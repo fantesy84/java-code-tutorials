@@ -1,28 +1,18 @@
-/**
- * 项目名: java-code-tutorials-spring-boot-starter
- * 包名:  net.fantesy84.user.domain
- * 文件名: User.java
- * Copy Right © 2015 Andronicus Ge
- * 时间: 2015年11月19日
- */
 package net.fantesy84.user.domain;
 
-import java.io.Serializable;
 import java.util.Date;
+import net.fantesy84.common.domain.BasePOJO;
 
-/**
- * @author Andronicus
- * @since 2015年11月19日
- */
-public class User implements Serializable {
-	private static final long serialVersionUID = -7373866585364487197L;
+public class User extends BasePOJO {
+	private static final long serialVersionUID = -2895818908187168204L;
 	private Integer id;
-	private String account;
-	private String password;
-	private String realName;
-	private String nickName;
-	private Date birthday;
-	private Byte deleteFlag;
+    private String account;
+    private String password;
+    private String sex;
+    private String realName;
+    private String nickName;
+    private Date birthday;
+    private Boolean deleteFlag;
 	/**
 	 * @return the id
 	 */
@@ -58,6 +48,18 @@ public class User implements Serializable {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	/**
+	 * @return the sex
+	 */
+	public String getSex() {
+		return sex;
+	}
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 	/**
 	 * @return the realName
@@ -98,14 +100,14 @@ public class User implements Serializable {
 	/**
 	 * @return the deleteFlag
 	 */
-	public Byte getDeleteFlag() {
+	public Boolean getDeleteFlag() {
 		return deleteFlag;
 	}
 	/**
 	 * @param deleteFlag the deleteFlag to set
 	 */
-	public void setDeleteFlag(Byte deleteFlag) {
+	public void setDeleteFlag(Boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
-	
+    
 }

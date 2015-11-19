@@ -541,4 +541,23 @@ public abstract class StringUtils {
 		}
 		return str.matches(regex);
 	}
+	
+	public static String replace(String regex, int group, String str, String replacement){
+		if (isNullOrEmpty(str)) {
+			return null;
+		}
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(str);
+		while (m.find()) {
+			String temp = m.group();
+			String target = m.group(group);
+			String temp1 = m.group().replace(target, replacement);
+			str = str.replace(temp, temp1);
+		}
+		return str;
+	}
+	
+	public static String replaceCellphoneNumber_Mid4bit(String source, String replacement){
+		return replace(RegularExpressions.CELLPHONE_NUMBER_REGEX, 7, source, replacement);
+	}
 }

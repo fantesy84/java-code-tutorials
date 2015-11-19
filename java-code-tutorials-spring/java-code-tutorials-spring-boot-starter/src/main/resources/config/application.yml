@@ -1,13 +1,12 @@
+server:
+  port: 8080
+  address: localhost
+
 spring:
   datasource:
-    initial-size: 5
-    max-active: 10
-    max-idle: 2
-    max-lifetime: 9000
     url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8
     username: root
     password: root
-    connection-timeout: 900
   http:
     encoding:
       charset: UTF-8
@@ -16,3 +15,14 @@ spring:
   view:
     suffix: jsp
     prefix: WEB-INF/jsp
+    
+mybatis: 
+  typeAliasesPackage: net.fantesy84.*.domain
+  mapperLocations: net/fantesy84/*/dao/mybatis/*.xml
+  configLocation: classpath:/mybatis-config.xml
+  
+logging:
+  level:
+    root: DEBUG
+    org.mybatis: DEBUG
+    com.ibatis: DEBUG
