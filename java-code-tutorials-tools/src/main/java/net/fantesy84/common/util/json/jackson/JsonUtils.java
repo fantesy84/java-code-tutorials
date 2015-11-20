@@ -95,14 +95,14 @@ public class JsonUtils {
 		if (dateFormat != null) {
 			if (timeZone != null) {
 				dateFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
-				logger.debug("JSON - 设置时区为:{}", timeZone);
+				logger.debug("JSON-设置时区为:{}", timeZone);
 			}
 			mapper.setDateFormat(dateFormat);
 			if (dateFormat instanceof SimpleDateFormat) {
 				SimpleDateFormat f = (SimpleDateFormat) dateFormat;
-				logger.debug("JSON - 设置时间格式为:{}", f.toPattern());
+				logger.debug("JSON-设置时间格式为:{}", f.toPattern());
 			} else if (dateFormat instanceof ISO8601DateFormat) {
-				logger.debug("JSON - 设置时间格式为:{}", "yyyy-MM-ddThh:mm:ssZ");
+				logger.debug("JSON-设置时间格式为:{}", "yyyy-MM-ddThh:mm:ssZ");
 			}
 		}
 		if (filteFields != null && filteFields.length > 0) {
@@ -111,11 +111,11 @@ public class JsonUtils {
 			if (isInclude) {
 				filters = new SimpleFilterProvider().addFilter(filterId,
 						SimpleBeanPropertyFilter.filterOutAllExcept(filteFields));
-				logger.debug("JSON - 设置属性过滤规则:仅包含![{}]", ArrayUtils.array2String(filteFields));
+				logger.debug("JSON-设置属性过滤规则:仅包含![{}]", ArrayUtils.array2String(filteFields));
 			} else {
 				filters = new SimpleFilterProvider().addFilter(filterId,
 						SimpleBeanPropertyFilter.serializeAllExcept(filteFields));
-				logger.debug("JSON - 设置属性过滤规则:仅排除![{}]", ArrayUtils.array2String(filteFields));
+				logger.debug("JSON-设置属性过滤规则:仅排除![{}]", ArrayUtils.array2String(filteFields));
 			}
 			mapper.setFilterProvider(filters);
 		}

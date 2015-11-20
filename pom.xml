@@ -10,5 +10,7 @@
 		<module>java-code-tutorials-tools</module>
 		<module>java-code-tutorials-webservice</module>
 		<module>java-code-tutorials-spring</module>
+		
+		<module>java-code-tutorials-design-pattern</module>
 	</modules>
 </project>
