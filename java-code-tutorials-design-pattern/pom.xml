@@ -48,6 +48,7 @@
 		<module>
 			java-code-tutorials-design-pattern-factory
 		</module>
+		<module>java-code-tutorials-design-pattern-singleton</module>
 	</modules>
 	<build>
 		<plugins>
