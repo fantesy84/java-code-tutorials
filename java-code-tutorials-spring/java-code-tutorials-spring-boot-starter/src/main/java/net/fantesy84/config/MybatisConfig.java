@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@AutoConfigureAfter({DataSourceAutoConfiguration.class})
+//@AutoConfigureAfter({DataSourceAutoConfiguration.class})
 @MapperScan(basePackages={"net.fantesy84.*.dao.mybatis"})
 public class MybatisConfig implements EnvironmentAware{
 	private final static Logger logger = LoggerFactory.getLogger(MybatisConfig.class);

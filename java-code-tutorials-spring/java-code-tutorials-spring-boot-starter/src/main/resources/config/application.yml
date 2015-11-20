@@ -3,19 +3,32 @@ server:
   address: localhost
 
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8
-    username: root
-    password: root
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8
+#    username: root
+#    password: root
   http:
     encoding:
       charset: UTF-8
       force: true
       enabled: true
-  view:
-    suffix: jsp
-    prefix: WEB-INF/jsp
-    
+  jta:
+    atomikos:
+      datasource:
+        min-pool-size: 1
+        max-pool-size: 10
+        login-timeout: 900
+        max-lifetime: 1800
+        borrowConnectionTimeout: 60
+        maintenance-interval: 60
+        xa-data-source-class-name: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+        unique-resource-name: db/fantesy84/master
+        test-query: SELECT 1 FROM GB_SYS_USER
+        xa-properties:
+          user: root
+          password: root
+          url: jdbc:mysql://localhost:3306/GOLD_BOSS_SYS?characterEncoding=utf-8
+         
 mybatis: 
   typeAliasesPackage: net.fantesy84.*.domain
   mapperLocations: net/fantesy84/*/dao/mybatis/*.xml
@@ -23,6 +36,4 @@ mybatis:
   
 logging:
   level:
-    root: DEBUG
-    org.mybatis: DEBUG
-    com.ibatis: DEBUG
+    root: INFO
