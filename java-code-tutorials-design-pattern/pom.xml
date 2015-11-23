@@ -49,6 +49,8 @@
 			java-code-tutorials-design-pattern-factory
 		</module>
 		<module>java-code-tutorials-design-pattern-singleton</module>
+		<module>java-code-tutorials-design-pattern-builder</module>
+		<module>java-code-tutorials-design-pattern-prototype</module>
 	</modules>
 	<build>
 		<plugins>
