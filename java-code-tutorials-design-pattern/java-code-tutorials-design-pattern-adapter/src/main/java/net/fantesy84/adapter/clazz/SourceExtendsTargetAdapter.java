@@ -11,12 +11,12 @@ package net.fantesy84.adapter.clazz;
  * @author Andronicus
  * @since 2015年11月23日
  */
-public class SourceTargetAdapter extends Source implements Target {
+public class SourceExtendsTargetAdapter extends Source implements Target {
 	
 	/**
 	 * 
 	 */
-	public SourceTargetAdapter() {
+	public SourceExtendsTargetAdapter() {
 		super();
 		super.setName("这是源类的方法一");
 	}

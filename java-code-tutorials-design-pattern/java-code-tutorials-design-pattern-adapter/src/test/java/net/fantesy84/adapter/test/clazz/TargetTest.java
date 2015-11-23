@@ -9,7 +9,7 @@ package net.fantesy84.adapter.test.clazz;
 
 import org.junit.Test;
 
-import net.fantesy84.adapter.clazz.SourceTargetAdapter;
+import net.fantesy84.adapter.clazz.SourceExtendsTargetAdapter;
 import net.fantesy84.adapter.clazz.Target;
 
 /**
@@ -19,7 +19,7 @@ import net.fantesy84.adapter.clazz.Target;
 public class TargetTest {
 	@Test
 	public void test1(){
-		Target t = new SourceTargetAdapter();
+		Target t = new SourceExtendsTargetAdapter();
 		t.method1();
 		t.method2();
 	}
