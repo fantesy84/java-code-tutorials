@@ -53,6 +53,7 @@
 		<module>java-code-tutorials-design-pattern-prototype</module>
 		<module>java-code-tutorials-design-pattern-adapter</module>
 		<module>java-code-tutorials-design-pattern-decorator</module>
+		<module>java-code-tutorials-design-pattern-proxy</module>
 	</modules>
 	<build>
 		<plugins>
