@@ -56,6 +56,7 @@
 		<module>java-code-tutorials-design-pattern-proxy</module>
 		<module>java-code-tutorials-design-pattern-facade</module>
 		<module>java-code-tutorials-design-pattern-bridge</module>
+		<module>java-code-tutorials-design-pattern-composite</module>
 	</modules>
 	<build>
 		<plugins>
