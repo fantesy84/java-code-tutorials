@@ -132,5 +132,7 @@
 	</build>
 	<modules>
 		<module>java-code-tutorials-spring-boot-starter</module>
+		<module>java-code-tutorials-spring-redis</module>
+		<module>java-code-tutorials-spring-redis-web</module>
 	</modules>
 </project>
