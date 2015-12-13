@@ -8,22 +8,14 @@
 package net.fantesy84.gcache.spring;
 
 import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.support.AbstractCacheManager;
-import org.springframework.util.Assert;
+import org.springframework.cache.transaction.AbstractTransactionSupportingCacheManager;
 
 /**
  * @author Andronicus
  * @since 2015年12月11日
  */
-public class GcacheManager extends AbstractCacheManager {
+public class GcacheManager extends AbstractTransactionSupportingCacheManager {
 	
 	private Collection<Gcache> caches;
 	
@@ -32,7 +24,9 @@ public class GcacheManager extends AbstractCacheManager {
 	 */
 	@Override
 	protected Collection<? extends Cache> loadCaches() {
-		// TODO Auto-generated method stub
+		if (caches != null) {
+			return caches;
+		}
 		return null;
 	}
 	/**
