@@ -13,5 +13,6 @@
 		
 		<module>java-code-tutorials-design-pattern</module>
 		<module>data-structures-algorithm-analysis</module>
+		<module>java-code-tutorials-sql-optimization</module>
 	</modules>
 </project>
