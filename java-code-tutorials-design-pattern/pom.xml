@@ -58,6 +58,7 @@
 		<module>java-code-tutorials-design-pattern-bridge</module>
 		<module>java-code-tutorials-design-pattern-composite</module>
 		<module>java-code-tutorials-design-pattern-flyweight</module>
+		<module>java-code-tutorials-design-pattern-strategy</module>
 	</modules>
 	<build>
 		<plugins>
