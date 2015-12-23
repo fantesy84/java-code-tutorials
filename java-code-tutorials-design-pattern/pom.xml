@@ -64,6 +64,9 @@
 		</module>
 		<module>java-code-tutorials-design-pattern-observer</module>
 		<module>java-code-tutorials-design-pattern-iterator</module>
+		<module>
+			java-code-tutorials-design-pattern-chain-of-responsibility
+		</module>
 	</modules>
 	<build>
 		<plugins>
