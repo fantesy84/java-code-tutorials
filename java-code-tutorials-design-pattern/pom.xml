@@ -62,6 +62,7 @@
 		<module>
 			java-code-tutorials-design-pattern-template-method
 		</module>
+		<module>java-code-tutorials-design-pattern-observer</module>
 	</modules>
 	<build>
 		<plugins>
