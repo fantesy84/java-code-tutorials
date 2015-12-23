@@ -67,6 +67,7 @@
 		<module>
 			java-code-tutorials-design-pattern-chain-of-responsibility
 		</module>
+		<module>java-code-tutorials-design-pattern-command</module>
 	</modules>
 	<build>
 		<plugins>
