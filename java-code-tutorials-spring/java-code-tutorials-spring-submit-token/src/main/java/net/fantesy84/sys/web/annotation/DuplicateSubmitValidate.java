@@ -14,7 +14,6 @@ import java.lang.annotation.Target;
 
 /**
  * TypeName: DuplicateSubmitValidate
- * <P>TODO
  * 
  * <P>CreateTime: 2015年12月23日
  * <P>UpdateTime: 
@@ -26,12 +25,22 @@ import java.lang.annotation.Target;
 public @interface DuplicateSubmitValidate {
 	/**
 	 * 是否新建令牌并保存,适用于使用ModelAndView作为返回值的时候
-	 * @return 默认为true,保存生成的token,将用于验证下一次该方法是否重复提交
+	 * @return 默认为<code>false</code>,不生成新的token,为<code>true</code>则会生成新的token,将用于验证下一次重复提交验证
 	 */
-	boolean saveToken() default true;
+	boolean createToken() default false;
 	/**
 	 * 本次令牌被使用过后,是否移除,以防止被注解的方法重复提交
 	 * @return 默认为true,移除本次令牌,防止重复提交.如果设置为false,则可进行重复提交
 	 */
-	boolean removeToken() default true;
+	boolean avoidDuplicateSubmit() default true;
+	/**
+	 * 是否重置重复提交验证.
+	 * @return 默认为false.即不重置验证.若为true,则需要跟<code>resetTime</code>属性配合定义验证有效期.
+	 */
+	boolean reset() default false;
+	/**
+	 * 重置验证时长(单位:毫秒)
+	 * @return 默认为0
+	 */
+	long resetTime() default 0;
 }

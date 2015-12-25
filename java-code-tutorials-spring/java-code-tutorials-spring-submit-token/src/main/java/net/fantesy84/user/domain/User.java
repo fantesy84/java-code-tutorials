@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @author junjie.ge
  *
  */
-public class User extends BaseDTO {
+public class User implements java.io.Serializable {
 	private static final long serialVersionUID = -7373866585364487197L;
 	private Integer id;
 	private String name;

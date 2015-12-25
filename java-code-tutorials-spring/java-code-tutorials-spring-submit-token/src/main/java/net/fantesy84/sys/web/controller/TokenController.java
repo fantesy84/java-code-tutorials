@@ -8,10 +8,9 @@
 package net.fantesy84.sys.web.controller;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,11 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.fantesy84.sys.dto.BaseTokenDTO;
 import net.fantesy84.sys.web.constants.WebConstants;
 
 /**
  * TypeName: BaseController
- * <P>TODO
  * 
  * <P>CreateTime: 2015年12月23日
  * <P>UpdateTime: 
@@ -37,32 +36,26 @@ public class TokenController implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(TokenController.class);
 	
 	@RequestMapping("/generate")
-	public String generateToken(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		byte id[] = session.getId().getBytes();
-		byte now[] = new Long(System.currentTimeMillis()).toString().getBytes();
-		MessageDigest md = null;
-		String token = null;
+	public BaseTokenDTO getStoreToken(HttpServletRequest request, HttpServletResponse response) {
+		BaseTokenDTO dto = new BaseTokenDTO();
 		try {
-			md = MessageDigest.getInstance("MD5");
-			md.update(id);
-			md.update(now);
-			byte[] digest = md.digest();
-			StringBuilder builder = new StringBuilder();
-			for (int i = 0; i < digest.length; i++) {
-				int val = ((int)digest[i]) & 0xff;
-				if (val < 16) {
-					builder.append("0");
+			HttpSession session = request.getSession(false);
+			if (session == null) {
+				logger.debug("HttpSession is null! Please login!");
+				dto.setResult(Boolean.FALSE);
+			} else {
+				String token = (String) session.getAttribute(WebConstants.REQUEST_SUBMIT_TOKEN);
+				logger.info("Session:[{}] stored token:[{}]", session.getId(), token);
+				if (token != null && token.length() > 0) {
+					dto.setResult(Boolean.TRUE);
+					dto.setToken(token);
+				} else {
+					dto.setResult(Boolean.FALSE);
 				}
-				builder.append(Integer.toHexString(val));
 			}
-			token = builder.toString();
-		} catch (NoSuchAlgorithmException e) {
-			logger.error(e.getMessage(), new IllegalStateException(e));
+		} catch (Exception e) {
+			dto.setResult(Boolean.FALSE);
 		}
-		if (token != null && token.length() > 0) {
-			session.setAttribute(WebConstants.REQUEST_SUBMIT_TOKEN, token);
-		}
-		return token;
+		return dto;
 	}
 }

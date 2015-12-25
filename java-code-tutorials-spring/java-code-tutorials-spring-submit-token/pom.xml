@@ -40,4 +40,8 @@
 			<artifactId>logback-classic</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<finalName>spring-token</finalName>
+	</build>
 </project>
