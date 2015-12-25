@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home page</title>
+<script type="text/javascript" src="../commons/plugin/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/user/user.js"></script>
+</head>
+<body>
+	<div align="center">
+		<div>
+			<label>用户名称:</label><input id="add_u_name" name="name" type="text"/>
+			<input type="button" value="新增" id="add_user"/>
+		</div>
+		<div>
+			<span>新增结果:</span>
+			<div>
+				<label>ID:</label><span id="newUser-id"></span>
+			</div>
+			<div>
+				<label>Name:</label><span id="newUser-name"></span>
+			</div>
+		</div>
+		<div style="margin-top: 50px">
+			<div>
+				<label>用户ID:</label><input id="query_u_id" type="text"/>
+				<label>用户名称:</label><input id="query_u_name" type="text"/>
+				<button id="query_user" class="button">查询</button>
+			</div>
+			<div style="margin-top: 20px">
+				<table id="table-1" border="1">
+					<caption>用户列表</caption>
+					<thead>
+						<tr>
+							<th>用户ID</th>
+							<th>用户名称</th>
+						</tr>
+					</thead>
+					<tbody id="user-table-body">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
