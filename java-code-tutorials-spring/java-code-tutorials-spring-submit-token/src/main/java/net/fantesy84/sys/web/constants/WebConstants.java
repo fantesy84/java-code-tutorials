@@ -18,4 +18,5 @@ package net.fantesy84.sys.web.constants;
  */
 public interface WebConstants {
 	String REQUEST_SUBMIT_TOKEN = "submit_token";
+	String RESET_SUBMIT_TOKEN = "reset_submit_token";
 }

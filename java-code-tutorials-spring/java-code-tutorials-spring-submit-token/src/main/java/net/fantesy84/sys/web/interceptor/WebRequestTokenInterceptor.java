@@ -17,11 +17,12 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import net.fantesy84.sys.util.TokenHelper;
 import net.fantesy84.sys.web.annotation.DuplicateSubmitValidate;
 import net.fantesy84.sys.web.constants.WebConstants;
 
@@ -36,6 +37,7 @@ import net.fantesy84.sys.web.constants.WebConstants;
 public class WebRequestTokenInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(WebRequestTokenInterceptor.class);
 	private static final String DEFAULT_TOKEN_NAME = "token";
+	private static final int SESSION_SCOPE = RequestAttributes.SCOPE_SESSION;
 	private String tokenName = DEFAULT_TOKEN_NAME;
 	/* (non-Javadoc)
 	 * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
@@ -47,30 +49,28 @@ public class WebRequestTokenInterceptor extends HandlerInterceptorAdapter {
         Method method = handlerMethod.getMethod();
         DuplicateSubmitValidate validateAnnotation = method.getAnnotation(DuplicateSubmitValidate.class);
         if (validateAnnotation != null) {
-        	boolean createToken = validateAnnotation.createToken();
-        	HttpSession session = request.getSession(false);
-        	if (createToken) {
-        		if (session == null) {
-        			session = request.getSession(true);
-					return true;
-				}
-        		Object token = session.getAttribute(WebConstants.REQUEST_SUBMIT_TOKEN);
-        		if (token == null) {
-					logger.info("Submit first time! Token will create after target method executed!");
-					return true;
-				}
+        	boolean reset = validateAnnotation.reset();
+        	if (reset) {
+        		Boolean resetMarker = (Boolean) RequestContextHolder.getRequestAttributes().getAttribute(WebConstants.RESET_SUBMIT_TOKEN, SESSION_SCOPE);
+        		if (resetMarker.booleanValue()) {
+        			logger.info(">>>>>>>> Submit token has been reset! As same the first submit! <<<<<<<<");
+        			RequestContextHolder.getRequestAttributes().setAttribute(WebConstants.RESET_SUBMIT_TOKEN, Boolean.FALSE, SESSION_SCOPE);
+        			return true;
+        		}
 			}
-        	logger.info("This method: [{}] will validate token!", method.getName());
+        	logger.info(">>>>>>>> This method: [{}] will validate token! <<<<<<<<", method.getName());
         	boolean avoidDuplicateSubmit = validateAnnotation.avoidDuplicateSubmit();
         	if (avoidDuplicateSubmit) {
         		if (isRepeatSubmit(request)) {
-        			logger.warn("Please don't repeat submit! URI:[{}]", request.getServletPath());
+        			logger.warn("******** Please don't repeat submit! URI:[{}] ********", request.getServletPath());
         			return false;
+        		} else {
+        			RequestContextHolder.getRequestAttributes().removeAttribute(WebConstants.REQUEST_SUBMIT_TOKEN, SESSION_SCOPE);
+        			
+        			logger.debug(">>>>>>>> Remove the current token complete! Avoid duplicate submit is working. <<<<<<<<");
         		}
-        		session.removeAttribute(WebConstants.REQUEST_SUBMIT_TOKEN);
-        		logger.debug("Remove the current token complete! Avoid duplicate submit is working...");
 			}
-        	logger.info("Pass the validation!");
+        	logger.info(">>>>>>>> Pass the validation! <<<<<<<<");
 		}
 		return true;
 	}
@@ -81,19 +81,7 @@ public class WebRequestTokenInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
-        DuplicateSubmitValidate validateAnnotation = method.getAnnotation(DuplicateSubmitValidate.class);
-        if (validateAnnotation != null) {
-        	boolean createToken = validateAnnotation.createToken();
-        	final HttpSession session = request.getSession(false);
-        	if (createToken) {
-        		String token = TokenHelper.getInstance().generateToken(request);
-				session.setAttribute(WebConstants.REQUEST_SUBMIT_TOKEN, token);
-				logger.debug("New token:[{}] has been saved in session with key:[{}]!", token, WebConstants.REQUEST_SUBMIT_TOKEN);
-			}
-        	
-		}
+		
 	}
 	
 	/* (non-Javadoc)
@@ -113,17 +101,14 @@ public class WebRequestTokenInterceptor extends HandlerInterceptorAdapter {
         	if (reset) {
         		long resetTime = validateAnnotation.resetTime();
         		if (resetTime > 0) {
-        			logger.info("Duplicate submit validate will disable {} ms after.", resetTime);
-        			final HttpSession session = request.getSession(false);
+        			logger.info(">>>>>>>> Duplicate submit validate will disable {} ms after. <<<<<<<<", resetTime);
+        			final HttpSession session = request.getSession();
         			Timer t = new Timer(tokenName, true);
         			TimerTask task = new TimerTask() {
         				@Override
         				public void run() {
-        					String storedToken = (String) session.getAttribute(WebConstants.REQUEST_SUBMIT_TOKEN);
-        					if (storedToken != null && storedToken.length() > 0) {
-        						session.removeAttribute(WebConstants.REQUEST_SUBMIT_TOKEN);
-        						logger.debug("Duplicate submit validation token:[{}] has been removed in session:[{}]! Validate reset!", storedToken, session.getId());
-        					}
+        					session.setAttribute(WebConstants.RESET_SUBMIT_TOKEN, Boolean.TRUE);
+        					logger.debug(">>>>>>>> Duplicate submit validation token has been removed from session! Validate reset! <<<<<<<<");
         				}
         			};
         			t.schedule(task, resetTime);
@@ -133,24 +118,24 @@ public class WebRequestTokenInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	protected boolean isRepeatSubmit(HttpServletRequest request) {
-		String serverToken = (String) request.getSession().getAttribute(WebConstants.REQUEST_SUBMIT_TOKEN);
-		logger.debug("Value of server token: {}", serverToken);
+		String serverToken = (String) RequestContextHolder.getRequestAttributes().getAttribute(WebConstants.REQUEST_SUBMIT_TOKEN, RequestAttributes.SCOPE_SESSION);
+		logger.debug(">>>>>>>> Value of server token: {} <<<<<<<<", serverToken);
     	if (serverToken == null) {
-    		logger.info("Server side token in session:[{}] is null! It's duplicate submit.");
+    		logger.info(">>>>>>>> Server side token is null! It's duplicate submit. <<<<<<<<");
 			return true;
 		}
     	String clientToken = request.getParameter(tokenName);
     	if (clientToken == null) {
-    		logger.debug("Could not find parameter's key [{}] in request.", tokenName);
+    		logger.debug(">>>>>>>> Could not find parameter's key [{}] in request. <<<<<<<<", tokenName);
     		clientToken = request.getHeader(tokenName);
 		}
-    	logger.debug("Value of client token: {}", clientToken);
+    	logger.debug(">>>>>>>> Value of client token: {} <<<<<<<<", clientToken);
     	if (clientToken == null) {
-    		logger.info("Client side token is null! It's duplicate submit.");
+    		logger.info(">>>>>>>> Client side token is null! It's duplicate submit. <<<<<<<<");
     		return true;
     	}
     	if (!serverToken.equals(clientToken)) {
-    		logger.info("Server side token is not equals client token! It's duplicate submit.");
+    		logger.info(">>>>>>>> Server side token is not equals client token! It's duplicate submit. <<<<<<<<");
 			return true;
 		}
     	return false;

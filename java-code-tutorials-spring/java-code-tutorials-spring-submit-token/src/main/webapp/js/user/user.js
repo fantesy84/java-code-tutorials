@@ -1,31 +1,8 @@
 /**
  * 
  */
-
 $(document).ready(function(){
-//	$("#add_user").click(function(){
-//		var name = $("#add_u_name").val();
-//		var user = {"name":name};
-//		$.ajax({
-//			type: "POST",
-//			contentType: 'application/json',
-//			url: "../user/update",
-//			dataType:"json",
-//			data:JSON.stringify(user),
-//			success: function(data){
-//				var userResults = data.users;
-//				for (var i = 0; i < userResults.length; i++) {
-//					var u = userResults[i];
-//					$("#newUser-id").html(u.id);
-//					$("#newUser-name").html(u.name);
-//				}
-//			},
-//			error: function(){
-//				console.error("error");
-//			}
-//		});
-//	});
-	var token;
+	var clientToken = getToken("add_user");
 	$("#add_user").click(function(){
 		var name = $("#add_u_name").val();
 		var user = {"name":name};
@@ -35,29 +12,30 @@ $(document).ready(function(){
 			url: "../user/save",
 			dataType:"json",
 			data:JSON.stringify(user),
-			beforeSend: function(xhr) {
-				token = getToken("add_user");
-				xhr.setRequestHeader("token", token);
+			beforeSend: function(XHR) {
+				console.info("token header: " + clientToken);
+				XHR.setRequestHeader("token", clientToken);
 			},
 			success: function(data, textStatus, jqXHR){
-				console.info(data);
 				if (data != null) {
 					var code = data.code;
 					if ("SUCCESS" == code) {
 						var users = data.users;
-						for (var int = 0; int < users.length; int++) {
-							var u = users[i];
-							$("#newUser-id").html(u.id);
-							$("#newUser-name").html(u.name);
+						if (users != null && users.length > 0) {
+							for (var int = 0; int < users.length; int++) {
+								var u = users[i];
+								$("#newUser-id").html(u.id);
+								$("#newUser-name").html(u.name);
+							}
 						}
 					}
 				}
-//				console.info(textStatus);
-//				console.info(jqXHR);
-//				console.info(jqXHR.getAllResponseHeaders());
 			},
-			error: function(e){
-				console.error(e);
+			error: function(XHR, errorTexts, exception){
+				
+			},
+			complete : function(XHR, textStatus){
+				
 			}
 		});
 	});
@@ -85,24 +63,22 @@ $(document).ready(function(){
 	});
 });
 
-function getToken(id){
+function getToken(id) {
 	var isValidate = $("#" + id).attr("duplicateSubmitValidate");
+	var clientToken = "";
 	if (isValidate) {
 		$.ajax({
 			type : "GET",
 			contentType: 'application/json',
 			url : "../token/generate",
 			dataType:"json",
+			ifModified : true,
+			async : false,
 			success: function(data, textStatus, jqXHR){
-				if (textStatus == 200) {
-					return data;
-				}
-			},
-			error: function(e){
-				console.error(e);
+				clientToken = data.token;
+				console.info("Token from server: " + clientToken);
 			}
 		});
-	} else {
-		return null;
+		return clientToken;
 	}
 }

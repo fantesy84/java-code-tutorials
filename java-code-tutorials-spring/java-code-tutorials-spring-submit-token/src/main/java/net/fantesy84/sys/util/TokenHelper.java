@@ -18,21 +18,25 @@ import org.slf4j.LoggerFactory;
 
 /**
  * TypeName: TokenHelper
- * <P>TODO
+ * <P>
+ * TODO
  * 
- * <P>CreateTime: 2015年12月23日
- * <P>UpdateTime: 
+ * <P>
+ * CreateTime: 2015年12月23日
+ * <P>
+ * UpdateTime:
+ * 
  * @author junjie.ge
  *
  */
 public class TokenHelper {
 	private static final Logger logger = LoggerFactory.getLogger(TokenHelper.class);
 	private static TokenHelper instance;
-	
+
 	private TokenHelper() {
-		
+
 	}
-	
+
 	public static TokenHelper getInstance() {
 		if (instance == null) {
 			synchronized (TokenHelper.class) {
@@ -43,7 +47,7 @@ public class TokenHelper {
 		}
 		return instance;
 	}
-	
+
 	public String generateToken() {
 		byte now[] = new Long(System.currentTimeMillis()).toString().getBytes();
 		MessageDigest md = null;
@@ -54,7 +58,7 @@ public class TokenHelper {
 			byte[] digest = md.digest();
 			StringBuilder builder = new StringBuilder();
 			for (int i = 0; i < digest.length; i++) {
-				int val = ((int)digest[i]) & 0xff;
+				int val = ((int) digest[i]) & 0xff;
 				if (val < 16) {
 					builder.append("0");
 				}
@@ -66,31 +70,31 @@ public class TokenHelper {
 		}
 		return token;
 	}
-	
+
 	public String generateToken(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		byte id[] = session.getId().getBytes();
-		byte now[] = new Long(System.currentTimeMillis()).toString().getBytes();
-		MessageDigest md = null;
 		String token = null;
 		try {
+			HttpSession session = request.getSession(false);
+			byte id[] = session.getId().getBytes();
+			byte now[] = new Long(System.currentTimeMillis()).toString().getBytes();
+			MessageDigest md = null;
 			md = MessageDigest.getInstance("MD5");
 			md.update(id);
 			md.update(now);
 			byte[] digest = md.digest();
 			StringBuilder builder = new StringBuilder();
 			for (int i = 0; i < digest.length; i++) {
-				int val = ((int)digest[i]) & 0xff;
+				int val = ((int) digest[i]) & 0xff;
 				if (val < 16) {
 					builder.append("0");
 				}
 				builder.append(Integer.toHexString(val));
 			}
 			token = builder.toString();
-		} catch (NoSuchAlgorithmException e) {
+		} catch (Exception e) {
 			logger.error(e.getMessage(), new IllegalStateException(e));
 		}
 		return token;
 	}
-	
+
 }
