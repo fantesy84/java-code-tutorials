@@ -7,10 +7,14 @@
  */
 package net.fantesy84.invoker;
 
+import net.fantesy84.receiver.ICommandProcesser;
+
 /**
+ * 命令调用者.
+ * <P>命令调用者只有一个方法action,该方法的实现必须返回执行什么命令
  * @author Andronicus
  * @since 2015年12月23日
  */
 public interface Invoker {
-	void action();
+	void action(ICommandProcesser processer);
 }
