@@ -70,6 +70,7 @@
 		<module>java-code-tutorials-design-pattern-command</module>
 		<module>java-code-tutorials-design-pattern-memento</module>
 		<module>java-code-tutorials-design-pattern-state</module>
+		<module>java-code-tutorials-design-pattern-visitor</module>
 	</modules>
 	<build>
 		<plugins>
