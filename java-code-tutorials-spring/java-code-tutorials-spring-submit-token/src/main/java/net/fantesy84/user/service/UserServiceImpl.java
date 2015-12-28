@@ -58,6 +58,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public Boolean save(User user) throws Exception {
 		userMap.put(ati.incrementAndGet(), user);
+		System.out.println("\n\n\n\nHello!Java!\n\n\n\n");
 		return Boolean.TRUE;
 	}
 

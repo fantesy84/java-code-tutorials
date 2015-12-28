@@ -36,7 +36,7 @@ public class UserController {
 	private IUserService userService;
 	
 	@RequestMapping("/save")
-	@DuplicateSubmitValidate(reset=true,resetTime=30000)
+	@DuplicateSubmitValidate
 	public UserDTO save(@RequestBody User user) {
 		UserDTO dto = new UserDTO();
 		try {

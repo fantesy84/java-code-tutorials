@@ -35,12 +35,12 @@ public @interface DuplicateSubmitValidate {
 	boolean avoidDuplicateSubmit() default true;
 	/**
 	 * 是否重置重复提交验证.
-	 * @return 默认为false.即不重置验证.若为true,则需要跟<code>resetTime</code>属性配合定义验证有效期.
+	 * @return 默认为true.即重置验证,需要跟<code>resetTime</code>属性配合定义验证有效期.若为false,则永远不重置重复提交,直到页面刷新
 	 */
-	boolean reset() default false;
+	boolean reset() default true;
 	/**
 	 * 重置验证时长(单位:毫秒)
-	 * @return 默认为0
+	 * @return 默认为10000毫秒,即10秒后可重复提交
 	 */
-	long resetTime() default 0;
+	long resetTime() default 10000;
 }
