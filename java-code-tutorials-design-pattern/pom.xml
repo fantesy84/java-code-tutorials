@@ -68,6 +68,8 @@
 			java-code-tutorials-design-pattern-chain-of-responsibility
 		</module>
 		<module>java-code-tutorials-design-pattern-command</module>
+		<module>java-code-tutorials-design-pattern-memento</module>
+		<module>java-code-tutorials-design-pattern-state</module>
 	</modules>
 	<build>
 		<plugins>
