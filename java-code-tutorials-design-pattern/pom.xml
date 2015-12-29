@@ -71,6 +71,7 @@
 		<module>java-code-tutorials-design-pattern-memento</module>
 		<module>java-code-tutorials-design-pattern-state</module>
 		<module>java-code-tutorials-design-pattern-visitor</module>
+		<module>java-code-tutorials-design-pattern-mediator</module>
 	</modules>
 	<build>
 		<plugins>
