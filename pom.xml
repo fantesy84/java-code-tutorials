@@ -15,5 +15,6 @@
 		<module>data-structures-algorithm-analysis</module>
 		<module>java-code-tutorials-sql-optimization</module>
 		<module>java-code-tutorials-nio</module>
+		<module>java-code-tutorials-websocket</module>
 	</modules>
 </project>

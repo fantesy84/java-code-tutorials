@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+<script type="text/javascript" src="js/client/websocket-client.js"></script>
+</head>
+<body>
+	<div align="center" style="font-size: 40px">Welcome!</div>
+	<div align="center">
+		<div id="message_area" style="border: 1px solid; width: 300px; height: 220px; overflow: auto;"></div>
+		<div style="margin-top: 10px">
+			<input id="send_message" type="text"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button onclick="send('send_message')">Send</button>
+		</div>
+		<div style="padding-top: 10px">
+			<button onclick="closeWebSocket()">Close</button>
+		</div>
+	</div>
+</body>
+</html>
