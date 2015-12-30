@@ -1,0 +1,3 @@
+要生成MyBatis的POJO和Mapper接口,请使用命令:
+
+mybatis-generator:generate
