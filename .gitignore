@@ -11,3 +11,4 @@ buildNumber.properties
 .project
 .settings/
 *.springBeans
+*.tern-project

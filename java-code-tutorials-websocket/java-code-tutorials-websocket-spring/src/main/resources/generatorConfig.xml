@@ -24,17 +24,21 @@
 			<property name="rootClass" value="net.fantesy84.sys.domain.BaseDTO"/>
 		</javaModelGenerator>
 		<!-- 生成映射文件的包名和位置-->
-		<sqlMapGenerator targetPackage="net.fantesy84.sys.user.mapper" targetProject="src/main/java">
+		<sqlMapGenerator targetPackage="net.fantesy84.sys.websocket.mapper" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true"/>
 		</sqlMapGenerator>
 		<!-- 生成DAO的包名和位置-->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="net.fantesy84.sys.user.mapper" targetProject="src/main/java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="net.fantesy84.sys.websocket.mapper" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true"/>
 		</javaClientGenerator>
 		<!-- 要生成哪些表-->
-		<table tableName="GB_SYS_USER" domainObjectName="User">
+		<!-- <table tableName="GB_SYS_USER" domainObjectName="User">
 			<property name="useActualColumnNames" value="false" />
 			<generatedKey column="ID" sqlStatement="MySql" type="post" identity="true"/>
 		</table>
+		<table tableName="GB_SYS_SOCKET_HISTORY" domainObjectName="WebSocketHistory">
+			<property name="useActualColumnNames" value="false" />
+			<generatedKey column="ID" sqlStatement="MySql" type="post" identity="true"/>
+		</table> -->
 	</context>
 </generatorConfiguration>

@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<context:component-scan base-package="net.fantesy84.**.service"></context:component-scan>
-	
+	<context:property-placeholder location="classpath:db.properties"/>
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="url" value="${spring.datasource.url}"/>
 		<property name="username" value="${spring.datasource.username}"/>
@@ -25,7 +25,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
-		<property name="mapperLocations" value="net/fantesy84/**/mapper/*Mapper.xml"/>
+		<property name="mapperLocations" value="classpath*:net/fantesy84/sys/*/mapper/*.xml"/>
 		<property name="typeAliasesPackage" value="net.fantesy84.**.domain"/>
 	</bean>
 	
@@ -33,7 +33,9 @@
 		<property name="basePackage" value="net.fantesy84.**.mapper"/>
 	</bean>
 	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"/>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* net.fantesy84.**.service.**.*(..))"/>
 	</aop:config>
