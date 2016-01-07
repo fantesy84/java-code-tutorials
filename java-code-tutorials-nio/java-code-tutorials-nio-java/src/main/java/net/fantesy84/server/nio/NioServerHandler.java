@@ -8,7 +8,6 @@
 package net.fantesy84.server.nio;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -40,7 +39,7 @@ public class NioServerHandler implements Runnable {
 		try {
 			serverSocketChannel = ServerSocketChannel.open();
 			serverSocketChannel.configureBlocking(false);
-			serverSocketChannel.bind(new InetSocketAddress(InetAddress.getByName("localhost"), port), 1024);
+			serverSocketChannel.bind(new InetSocketAddress("127.0.0.1", port), 1024);
 			selector = Selector.open();
 			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 			logger.info("Server has been started at port:[{}]", port);
@@ -63,13 +62,23 @@ public class NioServerHandler implements Runnable {
 						while (itt.hasNext()) {
 							SelectionKey selectionKey = itt.next();
 							itt.remove();
-							handleInput(selectionKey);
+							try {
+								handleInput(selectionKey);
+							} catch (Exception e) {
+								if (selectionKey != null) {
+									selectionKey.cancel();
+									if (selectionKey.channel() != null) {
+										selectionKey.channel().close();
+									}
+								}
+							}
 						}
 					}
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
-			} finally {
+			} 
+			if (selector != null) {
 				try {
 					selector.close();
 				} catch (IOException e) {
@@ -84,37 +93,38 @@ public class NioServerHandler implements Runnable {
 	private void handleInput(SelectionKey selectionKey) throws IOException {
 		if (selectionKey.isValid()) {
 			if (selectionKey.isAcceptable()) {
-				//已连接,为下一个新连接重置状态
-				ServerSocketChannel ssc = ServerSocketChannel.open();
+				logger.debug("发现连接操作位!将进行TCP握手,之后建立新管道等待新的客户端接入...");
+				ServerSocketChannel ssc = (ServerSocketChannel) selectionKey.channel();
 				SocketChannel sc = ssc.accept();
 				sc.configureBlocking(false);
 				sc.register(selector, SelectionKey.OP_READ);
 			}
 			if (selectionKey.isReadable()) {
-				SocketChannel channel = (SocketChannel) selectionKey.channel();
+				logger.debug("发现读取操作位!接收已连接的客户端发送的请求消息...");
+				SocketChannel sc = (SocketChannel) selectionKey.channel();
 				ByteBuffer readBuf = ByteBuffer.allocate(1024);
-				int read = channel.read(readBuf);
-				if (read < 0) {
-					selectionKey.cancel();
-					channel.close();
-					return;
-				}
+				int read = sc.read(readBuf);
 				String reqBody = null;
-				while ((read = channel.read(readBuf)) > 0) {
+				if (read > 0) {
+					logger.debug("发现数据!开始读取...");
 					readBuf.flip();
 					byte[] data = new byte[readBuf.remaining()];
 					readBuf.get(data);
 					reqBody = new String(data, "UTF-8");
+				} else if (read < 0) {
+					logger.warn("客户端已断开连接!");
+					selectionKey.cancel();
+					sc.close();
 				}
+				logger.debug("Server receive request body:{}", reqBody);
 				String response = null;
 				if (reqBody != null && reqBody.trim().length() > 0){
-					logger.debug("Server receive request body:{}", reqBody);
 					response = "query_time".equalsIgnoreCase(reqBody) ? new Date().toString() : "Bad request body!";
 				}
 				if (response != null && response.length() > 0) {
-					Write2Client(channel, response);
+					Write2Client(sc, response);
 				} else {
-					logger.info("等待请求消息...");
+					logger.info("无响应消息,等待新的请求消息...");
 				}
 			}
 		}
@@ -124,6 +134,7 @@ public class NioServerHandler implements Runnable {
 	 * @param response
 	 */
 	private void Write2Client(SocketChannel socketChannel, String response) throws IOException{
+		logger.debug("将发送响应消息:{}", response);
 		byte[] data = response.getBytes();
 		ByteBuffer writeBuf = ByteBuffer.allocate(data.length);
 		writeBuf.put(data);
