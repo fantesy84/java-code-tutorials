@@ -7,6 +7,8 @@
  */
 package net.fantesy84.client.netty;
 
+import java.nio.charset.StandardCharsets;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -15,6 +17,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 /**
  * @author Andronicus
@@ -56,7 +60,10 @@ public class Client {
 		 */
 		@Override
 		protected void initChannel(SocketChannel ch) throws Exception {
-			ch.pipeline().addLast(new ClientHandler());
+			ClientHandler handler = new ClientHandler();
+			ch.pipeline().addLast(handler);
+			ch.pipeline().addLast(new StringDecoder(StandardCharsets.UTF_8));
+			ch.pipeline().addLast(new LineBasedFrameDecoder(handler.getMsgLength()));
 		}
 		
 	}

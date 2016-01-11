@@ -22,15 +22,23 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class ClientHandler extends ChannelHandlerAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
+	private int counter;
+	private int msgLength;
 	/* (non-Javadoc)
 	 * @see io.netty.channel.ChannelHandlerAdapter#channelActive(io.netty.channel.ChannelHandlerContext)
 	 */
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		byte[] data = "query_time".getBytes();
-		ByteBuf writeBuf = Unpooled.buffer(data.length);
-		writeBuf.writeBytes(data);
-		ctx.writeAndFlush(writeBuf);
+		for (int i = 0; i < 100; i++) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("query_time").append(System.getProperty("line.separator"));
+			String requestBody = sb.toString();
+			byte[] data = requestBody.getBytes();
+			msgLength = data.length;
+			ByteBuf writeBuf = Unpooled.buffer(data.length);
+			writeBuf.writeBytes(data);
+			ctx.writeAndFlush(writeBuf);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -51,7 +59,8 @@ public class ClientHandler extends ChannelHandlerAdapter {
 		byte[] data = new byte[readBuf.readableBytes()];
 		readBuf.readBytes(data);
 		String response = new String(data, "UTF-8");
-		logger.info("Now is [{}]", response);
+		counter++;
+		logger.info("Now is [{}],the counter is: {}", response, counter);
 	}
 
 	/* (non-Javadoc)
@@ -60,6 +69,13 @@ public class ClientHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		ctx.close();
+	}
+
+	/**
+	 * @return the msgLength
+	 */
+	public int getMsgLength() {
+		return msgLength;
 	}
 	
 }
