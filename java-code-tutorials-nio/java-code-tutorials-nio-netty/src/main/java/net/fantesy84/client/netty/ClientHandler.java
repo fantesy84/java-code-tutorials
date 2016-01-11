@@ -29,13 +29,12 @@ public class ClientHandler extends ChannelHandlerAdapter {
 	 */
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		for (int i = 0; i < 100; i++) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("query_time").append(System.getProperty("line.separator"));
-			String requestBody = sb.toString();
-			byte[] data = requestBody.getBytes();
-			msgLength = data.length;
-			ByteBuf writeBuf = Unpooled.buffer(data.length);
+		String requestBody = "query_time" + System.getProperty("line.separator");
+		byte[] data = requestBody.getBytes();
+		msgLength = data.length;
+		ByteBuf writeBuf = null;
+		for (int i = 0; i < 10; i++) {
+			writeBuf = Unpooled.buffer(128);
 			writeBuf.writeBytes(data);
 			ctx.writeAndFlush(writeBuf);
 		}
@@ -55,10 +54,15 @@ public class ClientHandler extends ChannelHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		ByteBuf readBuf = (ByteBuf) msg;
-		byte[] data = new byte[readBuf.readableBytes()];
-		readBuf.readBytes(data);
-		String response = new String(data, "UTF-8");
+		String response = null;
+		if (msg instanceof String) {
+			response = (String) msg;
+		} else if (msg instanceof ByteBuf) {
+			ByteBuf readBuf = (ByteBuf) msg;
+			byte[] data = new byte[readBuf.readableBytes()];
+			readBuf.readBytes(data);
+			response = new String(data, "UTF-8");
+		}
 		counter++;
 		logger.info("Now is [{}],the counter is: {}", response, counter);
 	}

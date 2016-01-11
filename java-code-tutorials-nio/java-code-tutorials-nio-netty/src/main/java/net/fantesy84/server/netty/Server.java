@@ -7,8 +7,6 @@
  */
 package net.fantesy84.server.netty;
 
-import java.nio.charset.StandardCharsets;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -90,10 +88,13 @@ public class Server {
 		 */
 		@Override
 		protected void initChannel(SocketChannel ch) throws Exception {
-			ch.pipeline().addLast(new ServerHandler());
 			// 解决粘包/拆包问题
-			ch.pipeline().addLast(new StringDecoder(StandardCharsets.UTF_8));
-			ch.pipeline().addLast(new LineBasedFrameDecoder(128));
+			/*
+			 * 处理器的顺序很重要
+			 */
+			ch.pipeline().addLast(new LineBasedFrameDecoder(10240));
+			ch.pipeline().addLast(new StringDecoder());
+			ch.pipeline().addLast(new ServerHandler());
 		}
 
 	}

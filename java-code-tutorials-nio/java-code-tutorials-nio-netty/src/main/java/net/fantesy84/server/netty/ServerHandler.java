@@ -34,11 +34,15 @@ public class ServerHandler extends ChannelHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		ByteBuf readBuf = (ByteBuf) msg;
-		byte[] data = new byte[readBuf.readableBytes()];
-		readBuf.readBytes(data);
-		String body = new String(data, "UTF-8");
-		body = body.substring(0, (body.length() - System.getProperty("line.separator").length()));
+		String body = null;
+		if (msg instanceof String) {
+			body = (String) msg;
+		} else if (msg instanceof ByteBuf) {
+			ByteBuf readBuf = (ByteBuf) msg;
+			byte[] data = new byte[readBuf.readableBytes()];
+			readBuf.readBytes(data);
+			body = new String(data, "UTF-8");
+		}
 		counter++;
 		logger.info("The counter is:{}", counter);
 		logger.info("Server receive request msg:[{}]", body);
