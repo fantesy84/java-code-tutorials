@@ -52,9 +52,18 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
 	</dependencies>
 	<modules>
 		<module>java-code-tutorials-nio-java</module>
 		<module>java-code-tutorials-nio-netty</module>
+		<module>java-code-tutorials-netty-delimiter-decoder</module>
 	</modules>
 </project>
