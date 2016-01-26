@@ -48,6 +48,7 @@
 		<module>multithread-join</module>
 		<module>multithread-question2</module>
 		<module>multithread-question3</module>
+		<module>multithread-question4</module>
 	</modules>
 	<build>
 		<plugins>
