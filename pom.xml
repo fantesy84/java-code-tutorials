@@ -17,5 +17,6 @@
 		<module>java-code-tutorials-nio</module>
 		<module>java-code-tutorials-websocket</module>
 		<module>java-code-tutorials-multi-thread</module>
+		<module>java-code-tutorials-event</module>
 	</modules>
 </project>
