@@ -30,7 +30,9 @@ public class Input implements Runnable {
 		try {
 			for (int i = 0; i < 20; i++) {
 				String str = "排队人" + i + "号";
+				System.out.print("[" + str + " 进入队列!] ");
 				queue.enqueue(str);
+				System.out.println();
 				Thread.sleep(1000l);
 			}
 		} catch (Exception e) {

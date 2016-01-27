@@ -17,7 +17,7 @@ import net.fantesy84.queue.Output;
  */
 public class BlockingQueueRunner {
 	public static void main(String[] args) {
-		BlockingQueue<String> queue = new BlockingQueue<String>(10);
+		BlockingQueue<String> queue = new BlockingQueue<String>(8);
 		new Thread(new Input(queue)).start();
 		new Thread(new Output(queue)).start();
 	}
