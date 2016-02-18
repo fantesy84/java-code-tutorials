@@ -65,5 +65,6 @@
 		<module>java-code-tutorials-nio-java</module>
 		<module>java-code-tutorials-nio-netty</module>
 		<module>java-code-tutorials-netty-delimiter-decoder</module>
+		<module>java-code-tutorials-nio-netty-httpserver</module>
 	</modules>
 </project>
