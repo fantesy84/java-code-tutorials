@@ -37,7 +37,7 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 	
-	@RequestMapping(value="/login",method={RequestMethod.POST},consumes={MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@RequestMapping(value="/login",method={RequestMethod.POST},consumes={MediaType.APPLICATION_JSON_VALUE})
 	public UserDTO login(@RequestBody UserReq req){
 		UserDTO dto = null;
 		try {
