@@ -22,6 +22,7 @@
 		<mysql.version>5.1.36</mysql.version>
 		<dbcp.version>1.4</dbcp.version>
 		<druid.version>1.0.17</druid.version>
+		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 	</properties>
 	<distributionManagement>
 		<repository>
@@ -60,6 +61,11 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jolbox</groupId>
+				<artifactId>bonecp</artifactId>
+				<version>${bonecp.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>

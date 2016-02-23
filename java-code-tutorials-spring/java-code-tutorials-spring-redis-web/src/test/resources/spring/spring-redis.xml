@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<cache:annotation-driven/>
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.maxTotal}" />
+		<property name="maxIdle" value="${redis.maxIdle}" />
+		<property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="true" />
+	</bean>
+	<bean id="jedisShardInfo" class="redis.clients.jedis.JedisShardInfo">
+		<constructor-arg name="host" value="${redis.host}" />
+		<constructor-arg name="name" value="${redis.name}" />
+		<constructor-arg name="port" value="${redis.port}" />
+		<constructor-arg name="timeout" value="${redis.timeout}" />
+		<constructor-arg name="weight" value="${redis.weight}" />
+	</bean>
+	<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="usePool" value="true" />
+		<property name="poolConfig" ref="poolConfig" />
+		<property name="shardInfo" ref="jedisShardInfo" />
+	</bean>
+	<!-- init template -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory"/>
+	</bean>
+	<!-- create cache instances -->
+	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+		<constructor-arg name="redisOperations" ref="redisTemplate"/>
+		<constructor-arg name="cacheNames">
+			<set>
+				<value>USER</value>
+				<value>RULE</value>
+			</set>
+		</constructor-arg>
+		<property name="defaultExpiration" value="${redis.expire_time}"/>
+	</bean>
+</beans>
