@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
 <meta charset="UTF-8">
 <title>Home page</title>
 <script type="text/javascript" src="../commons/plugin/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/user/user.js"></script>
+<script type="text/javascript" src="../plugin/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../plugin/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-	<div align="center">
+	<div style="padding-top: 15%;padding-left: 40%">
+		<font color="red" size="60px">登录页</font><br/>
+	</div>
+	<div style="margin-top: 2px;margin-left: 40%">
 		<div>
-			<label>用户名称:</label><input id="add_u_name" name="name" type="text"/>
-			<input type="button" value="新增" id="add_user"/>
+			<form id="logining-form">
+				<label style="display: inline-block;width: 87px;">账号:</label><input id="logining_account" name="account" type="text" placeholder="用户名/电子邮箱/手机号"/><br/>
+				<label style="display: inline-block;width: 87px;">密码:</label><input id="logining_passwd" name="passwd" type="password"/><br/>
+				<input class="btn btn-lg" type="button" value="登陆" id="login"/>
+			</form>
 		</div>
 		<div>
 			<span>新增结果:</span>

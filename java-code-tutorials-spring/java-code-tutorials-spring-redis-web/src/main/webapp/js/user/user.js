@@ -9,19 +9,17 @@ $(document).ready(function(){
 		$.ajax({
 			type: "POST",
 			contentType: 'application/json',
-			url: "../user/update",
+			url: "../baseuser/save",
 			dataType:"json",
 			data:JSON.stringify(user),
 			success: function(data){
-				var userResults = data.users;
-				for (var i = 0; i < userResults.length; i++) {
-					var u = userResults[i];
-					$("#newUser-id").html(u.id);
-					$("#newUser-name").html(u.name);
+				if ("SUCCESS" == data.code) {
+					alert("保存成功!");
 				}
 			},
-			error: function(){
+			error: function(e){
 				console.error("error");
+				alert(e.getMessage());
 			}
 		});
 	});

@@ -18,5 +18,7 @@ import net.fantesy84.user.domain.UserBase;
 public interface IUserBaseService {
 	Boolean save(UserBase base) throws Exception;
 	UserBase update(UserBase raw) throws Exception;
+	UserBase findByPrimaryKey(Integer id) throws Exception;
+	List<UserBase> findByExample(UserBase base) throws Exception;
 	List<UserBase> findAll() throws Exception;
 }

@@ -101,4 +101,7 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 	</dependencies>
+	<build>
+		<finalName>srw</finalName>
+	</build>
 </project>
