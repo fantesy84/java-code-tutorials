@@ -32,7 +32,7 @@ import net.fantesy84.common.util.ArrayUtils;
 /**
  * TypeName: JsonUtils
  * <P>
- * 实现或继承<code>net.fantesy84.common.util.FilterMixIn</code>接口可针对不同的场景定制化JSON,使用本工具类的toJsonExcludePropert或toJsonIncludePropert方法可动态过滤对象属性.</br>
+ * 实现或继承<code>net.fantesy84.common.util.FilterMixIn</code>接口可针对不同的场景定制化JSON,使用本工具类的toJsonExcludeProperty或toJsonIncludeProperty方法可动态过滤对象属性.</br>
  * 例如:
  * <blockquote>
  * <code>
