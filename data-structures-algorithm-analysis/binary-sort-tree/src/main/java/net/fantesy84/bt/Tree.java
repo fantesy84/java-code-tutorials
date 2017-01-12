@@ -7,35 +7,37 @@
  */
 package net.fantesy84.bt;
 
+import java.io.Serializable;
+
 /**
  * TypeName: Tree
  * <P>TODO
- * 
+ *
  * <P>CreateTime: 2015年12月13日
- * <P>UpdateTime: 
+ * <P>UpdateTime:
  * @author junjie.ge
  *
  */
-public final class Tree implements java.io.Serializable{
+public final class Tree implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Tree leftNode;
 	private Tree rightNode;
-	private java.io.Serializable data;
-	
-	public Tree(java.io.Serializable data) {
+	private Serializable data;
+
+	public Tree(Serializable data) {
 		this.leftNode = null;
 		this.rightNode = null;
 		this.data = data;
 	}
-	
+
 	public int left() {
 		return leftdepth(this);
 	}
-	
+
 	public int right() {
 		return rightdepth(this);
 	}
-	
+
 	private int leftdepth(Tree t) {
 		int i = 0;
 		if (t.getLeftNode() == null) {
@@ -46,7 +48,7 @@ public final class Tree implements java.io.Serializable{
 		}
 		return i;
 	}
-	
+
 	private int rightdepth(Tree t) {
 		int i = 0;
 		if (t.getRightNode() == null) {
@@ -57,7 +59,7 @@ public final class Tree implements java.io.Serializable{
 		}
 		return i;
 	}
-	
+
 	/**
 	 * @return the leftNode
 	 */
@@ -85,7 +87,7 @@ public final class Tree implements java.io.Serializable{
 	/**
 	 * @return the data
 	 */
-	public java.io.Serializable getData() {
+	public Serializable getData() {
 		return data;
 	}
 	/**
@@ -94,5 +96,5 @@ public final class Tree implements java.io.Serializable{
 	public void setData(java.io.Serializable data) {
 		this.data = data;
 	}
-	
+
 }

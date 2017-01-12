@@ -213,7 +213,7 @@ public class ReflectUtils {
 	}
 
 	public static Method[] searchMethods(Object instance, String regex) {
-		if (instance == null || StringUtils.isNullOrEmpty(regex)) {
+		if (instance == null || StringUtils.isBlank(regex)) {
 			logger.error("反射的目标对象和正则表达式不能为空!", new IllegalArgumentException());
 		}
 		Method[] methods = instance.getClass().getDeclaredMethods();

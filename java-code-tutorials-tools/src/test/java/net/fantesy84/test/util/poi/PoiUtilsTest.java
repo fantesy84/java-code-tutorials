@@ -35,7 +35,7 @@ public class PoiUtilsTest {
 	private List<ExamplePOJO> children;
 	private IExcelFirstRowHandler titleHandler;
 	private IExcelDataRowsHandler rowsHandler;
-	
+
 	@Before
 	public void init(){
 		titleHandler = new DefaultFirstRowHandlerImpl();
@@ -60,7 +60,7 @@ public class PoiUtilsTest {
 		System.out.println(path);
 		instance.buildExcelFromTemplate(children, path);
 	}
-	
+
 	private class ExamplePOJOListHandler implements IExcelDataRowsHandler {
 
 		/* (non-Javadoc)
@@ -79,7 +79,7 @@ public class PoiUtilsTest {
 					System.out.println("columnName: " + fieldname);
 					Object childProperty = ReflectUtils.getter(child, fieldname, ReflectUtils.searchField(child, fieldname).getType());
 					System.out.println("property-value: " + childProperty);
-					Cell cell = row.getCell(k) == null ? row.createCell(k, Cell.CELL_TYPE_STRING) : row.getCell(k);
+					Cell cell = row.getCell(k) == null ? row.createCell(k) : row.getCell(k);
 					String cellValueString = null;
 					if (childProperty instanceof Date) {
 						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -91,6 +91,6 @@ public class PoiUtilsTest {
 				}
 			}
 		}
-		
+
 	}
 }

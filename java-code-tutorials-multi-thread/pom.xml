@@ -39,6 +39,7 @@
 		<module>multithread-question2</module>
 		<module>multithread-question3</module>
 		<module>multithread-question4</module>
+		<module>multithread-file</module>
 	</modules>
 	<build>
 		<plugins>

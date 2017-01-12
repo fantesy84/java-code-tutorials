@@ -29,7 +29,7 @@ public abstract class StringUtils {
 
 	private static final char EXTENSION_SEPARATOR = '.';
 	
-	public static boolean isNullOrEmpty(String str){
+	public static boolean isBlank(String str){
 		if (str == null || str.isEmpty()) {
 			return true;
 		}
@@ -516,7 +516,7 @@ public abstract class StringUtils {
 	 * @return a string array contains all matched subsequence if input is not null or empty and regular expression is not null
 	 */
 	public static String[] getMatchesString(String str, String regex){
-		if (isNullOrEmpty(str) || regex == null) {
+		if (isBlank(str) || regex == null) {
 			return new String[]{};
 		}
 		Pattern pattern = Pattern.compile(regex);
@@ -536,14 +536,14 @@ public abstract class StringUtils {
 	 * @see String#matches(String)
 	 */
 	public static boolean validate(String str, String regex) {
-		if (isNullOrEmpty(str) || regex == null) {
+		if (isBlank(str) || regex == null) {
 			return false;
 		}
 		return str.matches(regex);
 	}
 	
 	public static String replace(String regex, int group, String str, String replacement){
-		if (isNullOrEmpty(str)) {
+		if (isBlank(str)) {
 			return null;
 		}
 		Pattern p = Pattern.compile(regex);
