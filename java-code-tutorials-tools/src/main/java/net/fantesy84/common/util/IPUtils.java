@@ -39,7 +39,7 @@ public abstract class IPUtils {
 		String ip = null;
 		try {
 			InetAddress[] addresses = InetAddress.getAllByName(LOCALHOST_NAME);
-			if (!ArrayUtils.isNullOrEmptyArray(addresses)) {
+			if (!ArrayUtils.isEmpty(addresses)) {
 				StringBuilder builder = new StringBuilder();
 				for (int i = 0; i < addresses.length; i++) {
 					if (addresses[i].getHostAddress().matches(RegularExpressions.IP_V4_REGEX)){
@@ -76,7 +76,7 @@ public abstract class IPUtils {
 			ip = getLocalIPv4Address();
 		}
 		if (ip != null && ip.length() > 15) {
-			if (!StringUtils.isNullOrEmpty(regex)) {
+			if (!StringUtils.isBlank(regex)) {
 				StringBuilder builder = new StringBuilder();
 				String[] addrs = ip.split(",");
 				for (String addr : addrs) {

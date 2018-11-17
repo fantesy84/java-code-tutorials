@@ -7,6 +7,10 @@
  */
 package net.fantesy84.user.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -16,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import net.fantesy84.common.controller.BaseController;
+import net.fantesy84.common.util.random.RandomUtils;
+import net.fantesy84.user.controller.view.UserExcelEntity;
+import net.fantesy84.user.controller.view.UserExcelView;
 import net.fantesy84.user.domain.UserBase;
 import net.fantesy84.user.dto.ReqUserBaseDTO;
 import net.fantesy84.user.dto.ResUserBaseDTO;
@@ -33,7 +41,7 @@ import net.fantesy84.user.service.IUserBaseService;
 public class UserController extends BaseController{
 	@Autowired
 	private IUserBaseService userBaseService;
-	
+
 	@RequestMapping(value="/save",method={RequestMethod.POST},consumes={MediaType.APPLICATION_JSON_VALUE})
 	public ResUserBaseDTO save(@RequestBody ReqUserBaseDTO parameter) {
 		ResUserBaseDTO dto = new ResUserBaseDTO();
@@ -53,7 +61,7 @@ public class UserController extends BaseController{
 		}
 		return dto;
 	}
-	
+
 	@RequestMapping(value="/update",method={RequestMethod.POST},consumes={MediaType.APPLICATION_JSON_VALUE})
 	public ResUserBaseDTO update(@RequestBody ReqUserBaseDTO parameter) {
 		ResUserBaseDTO dto = new ResUserBaseDTO();
@@ -74,7 +82,7 @@ public class UserController extends BaseController{
 		}
 		return dto;
 	}
-	
+
 	@RequestMapping(value="/get/{id}")
 	public ResUserBaseDTO getByPrimaryKey(@PathVariable("id")Integer id) {
 		ResUserBaseDTO dto = new ResUserBaseDTO();
@@ -94,5 +102,25 @@ public class UserController extends BaseController{
 			dto.setMessage(e.getMessage());
 		}
 		return dto;
+	}
+
+	@RequestMapping("/export/excel")
+	public ModelAndView exportExcel() {
+		UserExcelView view = new UserExcelView();
+		view.setAttachmentName("测试用户导出");
+		List<UserExcelEntity> data = new ArrayList<>();
+		for (int i = 0; i < 20; i++) {
+			UserExcelEntity u = new UserExcelEntity();
+			u.setId((long)i);
+			u.setUsername(RandomUtils.getLowercaseRandomCharacters(8));
+			u.setPassword(RandomUtils.getFixcaseRandomCharactersAndNumberic(16));
+			u.setBirthday(RandomUtils.getRandomDate("1980-01-01 00:00:00", "2016-12-01 00:00:00"));
+			u.setBankAccountBalance(new BigDecimal(RandomUtils.getRandomNumberic(6)));
+			data.add(u);
+		}
+		view.setData(data);
+		ModelAndView mav = new ModelAndView();
+		mav.setView(view);
+		return mav;
 	}
 }

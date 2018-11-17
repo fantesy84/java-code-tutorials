@@ -17,17 +17,6 @@
 		<jackson.version>2.6.3</jackson.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>OSChina</id>
-			<url>http://maven.oschina.net/content/groups/public/</url>
-		</repository>
-		<repository>
-			<id>ibiblio</id>
-			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
-		</repository>
-	</repositories>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

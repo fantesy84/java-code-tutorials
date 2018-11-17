@@ -91,7 +91,7 @@ public class DateUtils {
 	 * @return {@link java.util.Date}对象
 	 */
 	public Date str2date(String src, String pattern) {
-		if (StringUtils.isNullOrEmpty(src)) {
+		if (StringUtils.isBlank(src)) {
 			throw new RuntimeException("用于转换的日期字符串不能为空!");
 		}
 		getDateFormat(pattern);
