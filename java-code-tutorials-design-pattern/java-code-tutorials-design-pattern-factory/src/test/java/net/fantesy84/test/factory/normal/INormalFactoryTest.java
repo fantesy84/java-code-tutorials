@@ -9,7 +9,7 @@ package net.fantesy84.test.factory.normal;
 
 import org.junit.Test;
 
-import net.fantesy84.common.util.json.jackson.JsonUtils;
+import net.fantesy84.common.util.json.JacksonUtils;
 import net.fantesy84.factory.normal.IFoodBuilder;
 import net.fantesy84.factory.normal.IFoodFactory;
 import net.fantesy84.factory.normal.bread.BreadFactoryImpl;
@@ -27,10 +27,10 @@ public class INormalFactoryTest {
 		//生产面包...
 		factory = new BreadFactoryImpl();
 		builder = factory.create();
-		System.out.println(JsonUtils.getInstance().toJson(builder.build()));
+		System.out.println(JacksonUtils.getInstance().toJson(builder.build()));
 		//生产蛋糕...
 		factory = new CakeFactoryImpl();
 		builder = factory.create();
-		System.out.println(JsonUtils.getInstance().toJson(builder.build()));
+		System.out.println(JacksonUtils.getInstance().toJson(builder.build()));
 	}
 }
